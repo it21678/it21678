@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/header :: header"></head>
+
+<body>
+<!-- Include the header fragment -->
+<div th:insert="fragments/menu :: menu"></div>
+<main>
+    <div class="container" >
+        <form action="#" th:action="@{/form/decline/{id}(id=${form.id})}" th:object="${form}"
+              method="post">
+
+            <div class="form-group">
+                <label for="members">Members</label>
+                <input type="text" id="members" class="form-control" th:field="*{members}">
+            </div>
+
+            <div class="form-group">
+                <label for="purpose">Purpose Name</label>
+                <input type="text" id="purpose" class="form-control" th:field="*{purpose}">
+            </div>
+
+            <div class="form-group">
+                <label for="statute">Statute</label>
+                <input type="text" id="statute" class="form-control" th:field="*{statute}">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" class="form-control" th:field="*{address}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Are you sure to decline application?</button>
+        </form>
+    </div>
+</main>
+
+<!-- Include the footer fragment -->
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

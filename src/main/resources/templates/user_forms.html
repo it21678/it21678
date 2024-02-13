@@ -1,0 +1,27 @@
+<forms>
+    <div th:if="${ not#lists.isEmpty(forms)}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Members</th>
+                <th>Purpose</th>
+                <th>Statute</th>
+                <th>Address</th>
+                <th>Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="form : ${forms}">
+                <td th:text="${form.members}"></td>
+                <td th:text="${form.purpose}"></td>
+                <td th:text="${form.statute}"></td>
+                <td th:text="${form.address}"></td>
+                <td th:text="${form.result}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${ #lists.isEmpty(forms)}">
+        No Applications found!
+    </div>
+</forms>
