@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public Integer saveUser(User user) {
+    public Long saveUser(User user) {
         String passwd= user.getPassword();
         String encodedPasswod = passwordEncoder.encode(passwd);
         user.setPassword(encodedPasswod);
@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public Integer updateUer(User user) {
+    public Long updateUer(User user) {
         user = userRepository.save(user);
         return user.getId();
     }
