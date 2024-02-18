@@ -34,8 +34,14 @@ public class FormService {
 
 
     public List<Form> getUserForms(Long userId){
-        User user = userRepository.getById(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Error: User is not found."));
         return user.getForms();
     }
 
+    @Transactional
+    public Integer updateForm(Form form) {
+        form = formRepository.save(form);
+        return form.getId();
+    }
 }

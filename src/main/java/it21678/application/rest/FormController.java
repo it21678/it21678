@@ -1,4 +1,4 @@
-package it21678.application.controller;
+package it21678.application.rest;
 
 
 import it21678.application.entity.Form;
@@ -6,10 +6,7 @@ import it21678.application.service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/form")
@@ -17,6 +14,9 @@ public class FormController {
 
     @Autowired
     private FormService formService;
+
+
+
 
     @GetMapping("")
     public String showForms(Model model){
@@ -35,7 +35,7 @@ public class FormController {
     public String saveForm(Form form,Model model){
         formService.saveForm(form);
         model.addAttribute("forms", formService.getForms());
-        return "forms";
+        return "user_forms";
     }
 
     @GetMapping("/accept/{form_id}")
@@ -46,8 +46,10 @@ public class FormController {
     }
 
     @PostMapping("/accept/{form_id}")
-    public String acceptFormConfirm(Form form, Model model){
-        formService.saveForm(form);
+    public String acceptFormConfirm(@PathVariable Integer form_id, Form form, Model model){
+        Form form_temp = formService.getForm(form_id);
+        form_temp.setResult(form.getResult());
+        formService.updateForm(form_temp);
         model.addAttribute("forms", formService.getForms());
         return "forms";
     }
@@ -64,15 +66,15 @@ public class FormController {
     public String declineFormConfirm(@PathVariable Integer form_id, Model model){
         Form form = formService.getForm(form_id);
         form.setResult("DECLINE");
-        formService.saveForm(form);
+        formService.updateForm(form);
         model.addAttribute("forms", formService.getForms());
         return "forms";
     }
 
 
-    @GetMapping("/user/forms/{user_id}")
-    public String showUserForms(@PathVariable Long user_id, Model model){
-        model.addAttribute("forms", formService.getUserForms(user_id));
+    @GetMapping("/user/forms")
+    public String showUserForms(Model model){
+        model.addAttribute("forms", formService.getForms());
         return "user_forms";
     }
 

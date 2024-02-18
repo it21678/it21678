@@ -12,10 +12,24 @@
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/user/forms/{user_id}">My Applications</a>
+                        <a sec:authorize="hasRole('USER')" class="nav-link" href="/form/user/forms">My Applications</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/form/new">Create Application</a>
+                        <a sec:authorize="hasRole('MODERATOR')" class="nav-link" href="/form">Applications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="hasRole('USER')" class="nav-link" href="/form/new">Create Application</a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="hasRole('ADMIN')" class="nav-link" href="/users">Users</a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()"  class="nav-item">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit"  class="btn btn-primary" value="Sign Out"/>
+                        </form>
+                    </li>
+                    <li sec:authorize="!isAuthenticated()"  class="nav-item">
+                        <a  class="btn btn-primary" href="/login">Login</a>
                     </li>
                 </ul>
             </div>

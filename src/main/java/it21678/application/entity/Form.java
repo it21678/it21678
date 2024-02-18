@@ -3,7 +3,9 @@ package it21678.application.entity;
 import jakarta.persistence.*;
 import org.hibernate.mapping.Value;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="forms")
@@ -30,8 +32,11 @@ public class Form {
             joinColumns = @JoinColumn(name = "form_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames={"user_id", "form_id"})})
-    private List<User> users;
+    private Set<User> users = new HashSet<>();
 
+    public Set<User> getUser() {
+        return users;
+    }
 
 
     public Integer getId() {
